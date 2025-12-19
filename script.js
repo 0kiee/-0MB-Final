@@ -1,6 +1,21 @@
 document.addEventListener("DOMContentLoaded", () => {
-
+  
   gsap.registerPlugin(ScrollTrigger);
+
+  const testimonialSwiper = new Swiper(".testimonials-slider-container", {
+    slidesPerView: 1,
+    spaceBetween: 10,
+    initialSlide: 1,
+    breakpoints: {
+      475: {
+        slidesPerView: 3
+      },
+      768: {
+        slidesPerView: "auto",
+        spaceBetween: 5
+      },
+    },
+  });
 
   if (window.matchMedia("(min-width:992px)").matches) {
     console.log("Desktop animations active");
@@ -39,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
     outletItems.forEach((item, index) => {
       let slideId = item.getAttribute("data-slide-id");
       let parentTrigger = mainTimeline.scrollTrigger;
-
+      
       let step = 1 / (outletItems.length + 0);
       let offset = step / 5;
 
@@ -47,11 +62,11 @@ document.addEventListener("DOMContentLoaded", () => {
         scrollTrigger: {
           start: () => parentTrigger.start + (parentTrigger.end - parentTrigger.start) * (index * step + offset),
           end: () => "+=" + item.offsetHeight,
-
+          
           onEnter: () => {
             document.querySelector(`.pin-${index + 1}`).classList.add("active");
             document.querySelector(`.outlet-icon-wrapper--${index + 1}`).classList.add("active");
-
+            
             if (index + 1 > 1) {
               document.querySelector(`.line-${index + 1}`).classList.add("active");
             }
@@ -67,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
           onEnterBack: () => {
             document.querySelector(`.pin-${index + 1}`).classList.add("active");
             document.querySelector(`.outlet-icon-wrapper--${index + 1}`).classList.add("active");
-
+            
             if (index - 1 > 1) {
                document.querySelector(`.line-${index + 1}`).classList.add("active");
             }
